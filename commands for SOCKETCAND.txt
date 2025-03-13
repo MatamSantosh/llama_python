@@ -1,0 +1,31 @@
+.................Things to do in client side ..................:
+
+sudo apt install net-tools iproute2 can-utils linux-modules-extra-$(uname -r)      -to install can-utils
+ip link add dev vcan3 type vcan     -to setup vcan3
+ip link set vcan3 up
+pip3 install python-can             - for installing python can module
+pip3 show python-can                - to see the version of can, if you see the can version 3.5 then run below command to upgrade to 4.5 version
+pip3 install python-can --upgrade
+
+
+.............Things to do in server side..................:
+
+sudo apt install net-tools iproute2 can-utils linux-modules-extra-$(uname -r)   - to install can-utils
+ip link add dev vcan3 type vcan
+ip link set vcan3 up
+pip3 show python-can
+pip3 install python-can --upgrade
+
+#############Build socketcand from source################
+
+sudo apt-get install -y autoconf
+git clone https://github.com/linux-can/socketcand.git
+cd socketcand
+git checkout 3632d63f9f3a28dd63824de691869008dfd5566e
+./autogen.sh
+./configure
+make
+make install
+
+socketcand --verbose -l ens5 --interface vcan3 &     - to bind the socket
+candump vcan3                                        - to receive the can packets
